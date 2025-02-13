@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Nos Casamos!</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://kit.fontawesome.com/9a289aa4a3.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Inicio -->
+    <div id="inicio" class="inicio">
+
+        <div class="container">
+            <!-- Contenedor del ícono de la carta -->
+            <div class="carta" id="inicio" onclick="abrirInvitacion()">
+                <img src="https://images.vexels.com/media/users/3/197267/isolated/preview/1cf8975266b8e3be48afc5b3dddd3202-linda-carta-de-san-valentin-plana.png"
+                    alt="Carta de San Valentín">
+                <h2>ABRIR INVITACIÓN</h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sitio Principal -->
+    <div id="contenido" class="contenido">
+
+        <header id="header">
+            <nav>
+                <a href="#">Inicio</a>
+                <a href="#detalles-evento">Ubicacion</a>
+                <a href="#regalos">Regalos</a>
+            </nav>
+            <a href="#confirmacion" class="btn-nav">Confirmar asistencia</a>
+        </header>
+
+        <!-- Portada -->
+        <section id="portada">
+            <div class="shadow"></div>
+            <div class="particles"></div>
+            <div class="slider">
+                <div class="slide"> <img src="img/section1.jpg" alt="Imagen 1"> </div>
+            </div>
+
+
+            <div class="mensaje-fijo">
+                <h2>¡NOS CASAMOS!</h2>
+                <br>
+                <h1>Fiore<i class="fa-solid fa-heart fa-beat"></i>Cesar</h1>
+                <div class="fecha-display">
+                    <div>
+                        <p>Marzo</p>
+                    </div>
+                    <span class="fecha-span"></span>
+                    <div>
+                        <h2 class="dia-especial">15</h2>
+                    </div>
+                    <span class="fecha-span"></span>
+                    <div>
+                        <p>2025</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+        
+        <div class="music-player">
+            <audio id="audio" loop>
+                <source src="/img/amo.mp3" type="audio/mpeg">
+                Tu navegador no soporta el elemento de audio.
+            </audio>
+            <button id="playPauseBtn"><i class="fa-solid fa-volume-high fa-shake"></i></button>
+        </div>
+
+        <div id="contenido-w">
+            <br><br><br>
+            <!-- Nuestra Historia -->
+            <section id="nuestra-historia">
+
+                <div class="display">
+
+                    <div class="contenido">
+                        <img src="img/amor.png" alt="Nuestra historia">
+                        <div class="display2">
+                            <p><i class="fa-solid fa-heart fa-bounce" style="color: #d16ba5;"></i></p>
+                            <h2>Nuestra Historia</h2>
+                            <p>Hace 14 años, nuestras vidas se unieron de manera inesperada, creando una conexión única
+                                llena de risas,
+                                sueños y aventuras. Después de compartir más de una década juntos, hoy estamos listos
+                                para sellar nuestro
+                                amor con el compromiso del matrimonio. Este día celebra no solo nuestra unión, sino
+                                también el apoyo y
+                                cariño de quienes han sido parte de nuestra historia.
+                                <br><br>
+                                ¡Gracias por acompañarnos en este capítulo tan especial!
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Participación de los Invitados -->
+            <section id="participacion">
+
+                <h3>Padrinos & Testigos</h3>
+                <br>
+                <div class="scroll-container">
+                    <div class="scroll-text">
+                        <h4>Cristian Ortega - Lizet Castañon</h4>
+                    </div>
+
+                    <div class="scroll-text">
+                        <h4 style="color:#d16ba5">Yenny Salcedo - Yosselin Jayo</h4>
+                    </div>
+                </div>
+            </section>
+            <br><br><br>
+        </div>
+
+        <section id="agenda-fecha">
+
+            <div class="display">
+                <h4 class="counter">¡EL <span style="color:#d16ba5">MOMENTO</span><br>ESTA<br>POR LLEGAR!</h4>
+                <br>
+                <div id="contador" class="contador"></div>
+                <br>
+                <a href="https://www.google.com/calendar/render?action=TEMPLATE&text=¡Nos+Casamos!&dates=20250315T123000Z/20250312T130000Z&details=Únete+a+nosotros+para+celebrar+nuestra+boda&location=Arias+3302,+Cdad.+Autónoma+de+Buenos+Aires&sf=true&output=xml"
+                    target="_blank" class="btn-calendario fa-shake-body">
+                    ¡Agéndalo! Será inolvidable
+                </a>
+
+            </div>
+        </section>
+
+        <div id="contenido-w">
+
+
+            <!-- Detalles del Evento -->
+            <section id="detalles-evento">
+
+                <div class="container-map">
+                    <!-- Imagen a la izquierda -->
+                    <div class="image-container-map">
+                        <img src="https://nikocoto.com/wp-content/uploads/2016/03/Civil-Jime-Fede-2.jpg"
+                            alt="Icono de ceremonia">
+                    </div>
+
+                    <!-- Texto a la derecha -->
+                    <div class="text-container-map">
+                        <h3>CEREMONIA</h3>
+                        <p>Sede Central - Registro Civil</p>
+                        <p>Uruguay 753</p>
+                        <p>Cdad. Autónoma de Buenos Aires</p>
+                        <p>12 de Marzo - 12:30</p>
+                        <br>
+                        <a href="#" class="btn-mapa btn" data-mapa="direccion1">¿Cómo llegar?</a>
+                    </div>
+                </div>
+
+                <div class="container-map">
+                    <!-- Texto a la derecha -->
+                    <div class="text-container-map">
+                        <h3>FESTEJO</h3>
+                        <p>Quinta Catalina's</p>
+                        <p>Arias 3302 - Glew</p>
+                        <p>Prov. de Buenos Aires</p>
+                        <p>15 de Marzo - 20:00</p>
+                        <br>
+                        <a href="#" class="btn-mapa btn" data-mapa="direccion2">¿Cómo llegar?</a>
+                    </div>
+                    <!-- Imagen a la izquierda -->
+                    <div class="image-container-map">
+                        <img src="/img/quinta.jpg" alt="Icono de ceremonia">
+                    </div>
+                </div>
+
+                <!-- Modal Box -->
+                <div id="modal" class="modal">
+                    <div class="modal-contenido">
+                        <span id="cerrarModal" class="cerrar">&times;</span>
+                        <!-- Mapa de Google -->
+                        <iframe id="iframeMapa" width="100%" height="450" style="border:0;" allowfullscreen=""
+                            loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                </div>
+
+            </section>
+
+            <section id="itinerario">
+                <h3>ITINERARIO</h3>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <h2>Recepción</h2>
+                        <p>20:00 PM</p>
+                        <p>Por favor, llegar
+                            <br>
+                            15 minutos antes.
+                        </p>
+                    </div>
+                    <div class="timeline-item">
+                        <h2>Fotografía</h2>
+                        <p>20:30 PM</p>
+                        <p>Tomate una foto
+                            <br>
+                            con los novios.
+                        </p>
+                    </div>
+                    <div class="timeline-item">
+                        <h2>Cena</h2>
+                        <p>22:00 PM</p>
+                        <p>Un delicioso menú,
+                            <br>
+                            especialmente para ti.
+                        </p>
+                    </div>
+                    <div class="timeline-item">
+                        <h2>Ceremonia</h2>
+                        <p>23:00 PM</p>
+                        <p>No te pierdas este
+                            <br>
+                            momento especial.
+                        </p>
+                    </div>
+                    <div class="timeline-item">
+                        <h2>Primer baile</h2>
+                        <p>23:30 PM</p>
+                        <p>¡Baile de los novios!
+                            <br>"Nuestro primer vals"
+                        </p>
+                    </div>
+                    <div class="timeline-item">
+                        <h2>Despedida</h2>
+                        <p>04:00 AM</p>
+                        <p>Gracias por estar
+                            <br>
+                            este día tan especial.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Regalos -->
+            <section id="regalos">
+
+                <div class="iconos">
+                    <div class="icono">
+                        <img src="https://cdn-icons-png.flaticon.com/512/7051/7051094.png" alt="" style="width:10%"
+                            class="fa-bounce">
+                        <h3>¡Lluvia de regalos!</h3>
+                        <p>Gracias por tu compañia en nuestra nueva etapa.<br>Si quieres tener un detalle con nosotros
+                            estaremos muy agradecidos ❤️</p>
+                        <br>
+                        <p>
+                            <strong>Alias - </strong>
+                            <span id="aliasCBU">BODA.FIORE.CESAR</span>
+                            <button class="btn-copy" onclick="copyToClipboard('#aliasCBU')"><i
+                                    class="fa-regular fa-copy fa-shake"></i></button>
+                        </p>
+                        <p>
+                            <strong>CBU - </strong>
+                            <span id="cbu">0000003100091266409120</span>
+                            <button class="btn-copy" onclick="copyToClipboard('#cbu')"><i
+                                    class="fa-regular fa-copy fa-shake"></i></button>
+                        </p>
+                        <br>
+                        <a href="https://link.mercadopago.com.ar/seriesoriginals" target="_blank"
+                            class="mercadopago-link btn">Enviar con MercadoPago</a>
+
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- Confirmación de Asistencia -->
+            <section id="confirmacion">
+
+                <div class="display">
+                    <h3>Confirmación de Asistencia</h3>
+                    <p>Tu presencia es importante para nosotros, por favor confirmar asistencia.</p>
+                    <br>
+                    <!-- Enlace para abrir el modal -->
+                    <a href="#" id="openModal" class="btn">Confirmar asistencia</a>
+
+                    <!-- Modal box -->
+                    <div id="modalbox-asistencia" class="modalbox">
+                        <div class="modal-content">
+                            <div id="no-ninos">
+
+                                <img src="https://cdn-icons-png.freepik.com/512/5778/5778158.png" alt=""
+                                    style="width:10%">
+                                <h3>¡No niños!</h3>
+                                <p>Por razones de seguridad, el evento es para mayores de 18 años.</p>
+
+                            </div>
+                            <span id="closeModal" class="close">&times;</span>
+
+                            <form method="post" id="feedback-form" action="https://sheetdb.io/api/v1/xsr7ejasp5q8s">
+                                <label for="feedback-name">Apellido y Nombre</label>
+                                <input id="feedback-name" name="data[nombre]" required placeholder="Tu nombre"
+                                    aria-label="Apellido y Nombre" />
+
+                                <label for="feedback-assist">¿Asistirás?</label>
+                                <select id="feedback-assist" name="data[asistencia]" required aria-label="¿Asistirás?">
+                                    <option value="">Selecciona una opción</option>
+                                    <option value="Asistiré">Asistiré</option>
+                                    <option value="No asistiré">No asistiré</option>
+                                </select>
+
+                                <label for="feedback-comment">Comentario</label>
+                                <textarea id="feedback-comment" name="data[comentario]" required
+                                    placeholder="Escribe tu comentario" aria-label="Comentario"></textarea>
+
+                                <button type="submit" class="btn">CONFIRMAR ASISTENCIA</button>
+                            </form>
+
+                            <!-- Mensajes de estado -->
+                            <div id="feedback-loading" style="display: none;">Tu respuesta está siendo enviada...</div>
+                            <div id="feedback-success-alert" style="display: none;">Respuesta enviada con éxito.</div>
+                            <div id="feedback-error-alert" style="display: none;">Hubo un error al enviar tu respuesta.
+                                Intenta de nuevo.</div>
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles"></script>
+
+
+    <script src="js/scripts.js"></script>
+
+</body>
+
+</html>
