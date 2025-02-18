@@ -1170,6 +1170,17 @@ section#confirmacion {
   background-color: #a345e6;
 }
 
+#camara-container {
+  width: 300px;
+  height: 300px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+#mensaje {
+  color: #521750;
+}
+
 @media (max-width: 768px) {
   .container-map {
     width: 90%;

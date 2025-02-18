@@ -1,36 +1,52 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verificación de Invitaciones QR</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <script src="https://kit.fontawesome.com/9a289aa4a3.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
     <!-- Cargar Firebase -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
     <!-- Librería jsQR para escanear QR -->
     <script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.js"></script>
 </head>
+
 <body>
-    <h1>Verificación de Invitaciones QR</h1>
 
-    <!-- Contenedor para la cámara -->
-    <div id="camara-container" style="width: 300px; height: 200px; border: 1px solid black;">
-        <video id="camara" autoplay playsinline style="width: 100%; height: 100%; object-fit: cover;"></video>
+    <div id="contenido-w">
+        <!-- Nuestra Historia -->
+        <section id="nuestra-historia">
+            <div class="display">
+                <h4 class="counter">VERIFICACION DE <span style="color:#d16ba5">INVITACION </span>QR</h4>
+            </div>
+
+            <!-- Contenedor para la cámara -->
+            <div id="camara-container">
+                <video id="camara" autoplay playsinline style="width: 100%; height: 100%; object-fit: cover;"></video>
+            </div>
+
+            <!-- Mensaje de resultado -->
+            <div id="mensaje"></div>
+        </section>
     </div>
-
-    <!-- Mensaje de resultado -->
-    <div id="mensaje"></div>
-
     <script>
         // Configuración de Firebase
         const firebaseConfig = {
-    apiKey: "AIzaSyBjDElF__Bcgo137GGf6hPRXhEp4BatD10",
-    authDomain: "recaudaciones-26766.firebaseapp.com",
-    projectId: "recaudaciones-26766",
-    storageBucket: "recaudaciones-26766.appspot.com",
-    messagingSenderId: "793331710217",
-    appId: "1:793331710217:web:93d036faa48032a6f53bd8"
-};
+            apiKey: "AIzaSyBjDElF__Bcgo137GGf6hPRXhEp4BatD10",
+            authDomain: "recaudaciones-26766.firebaseapp.com",
+            projectId: "recaudaciones-26766",
+            storageBucket: "recaudaciones-26766.appspot.com",
+            messagingSenderId: "793331710217",
+            appId: "1:793331710217:web:93d036faa48032a6f53bd8"
+        };
 
         // Inicializar Firebase
         firebase.initializeApp(firebaseConfig);
@@ -97,9 +113,9 @@
                     if (!invitado.asistio) {
                         // Marcar como presente
                         await invitadoRef.update({ asistio: true });
-                        mensajeDiv.textContent = `Acceso permitido. ¡Bienvenido, ${invitado.nombre}!`;
+                        mensajeDiv.textContent = `Acceso permitido. ¡Bienvenido, ${invitado.nombre}! Tu mesa es: ${invitado.mesa}`;
                     } else {
-                        mensajeDiv.textContent = "Este invitado ya ha ingresado.";
+                        mensajeDiv.textContent = `Este invitado ya ha ingresado. Su mesa es: ${invitado.mesa}`;
                     }
                 } else {
                     mensajeDiv.textContent = "Código QR inválido.";
@@ -111,4 +127,5 @@
         }
     </script>
 </body>
+
 </html>
