@@ -25,12 +25,12 @@
         <!-- Nuestra Historia -->
         <section id="nuestra-historia">
             <div class="display">
-                <h4 class="counter">VERIFICACION DE <span style="color:#d16ba5">INVITACION </span>QR</h4>
+                <h4 class="counter">VERIFICACION DE <span style="color:#d16ba5">INVITACION </span></h4>
             </div>
 
             <!-- Contenedor para la cámara -->
             <div id="camara-container">
-                <video id="camara" autoplay playsinline style="width: 100%; height: 100%; object-fit: cover;"></video>
+                <video id="camara" autoplay playsinline style="width: 80%; height: 80%; object-fit: cover; padding:20px"></video>
             </div>
 
             <!-- Mensaje de resultado -->
@@ -102,29 +102,33 @@
 
         // Función para verificar el código QR
         async function verificarCodigoQR(codigoQR) {
-            try {
-                // Buscar el código en Firebase
-                const invitadoRef = db.collection('invitados').doc(codigoQR);
-                const invitadoDoc = await invitadoRef.get();
+    try {
+        // Buscar el código en Firebase
+        const invitadoRef = db.collection('invitados').doc(codigoQR);
+        const invitadoDoc = await invitadoRef.get();
 
-                if (invitadoDoc.exists) {
-                    const invitado = invitadoDoc.data();
+        if (invitadoDoc.exists) {
+            const invitado = invitadoDoc.data();
 
-                    if (!invitado.asistio) {
-                        // Marcar como presente
-                        await invitadoRef.update({ asistio: true });
-                        mensajeDiv.textContent = `Acceso permitido. ¡Bienvenido, ${invitado.nombre}! Tu mesa es: ${invitado.mesa}`;
-                    } else {
-                        mensajeDiv.textContent = `Este invitado ya ha ingresado. Su mesa es: ${invitado.mesa}`;
-                    }
-                } else {
-                    mensajeDiv.textContent = "Código QR inválido.";
-                }
-            } catch (error) {
-                mensajeDiv.textContent = "Ocurrió un error al verificar el código.";
-                console.error(error);
+            if (!invitado.asistio) {
+                // Marcar como presente
+                await invitadoRef.update({ asistio: true });
+                mensajeDiv.innerHTML = `Acceso permitido.
+                <br>
+                ¡Bienvenido, ${invitado.nombre}!
+                <br>
+                Tu mesa es:  Mesa ${invitado.mesa}`;
+            } else {
+                mensajeDiv.innerHTML = `Este invitado ya ha ingresado.<br>Su mesa es: ${invitado.mesa}`;
             }
+        } else {
+            mensajeDiv.innerHTML = "Código QR inválido.";
         }
+    } catch (error) {
+        mensajeDiv.innerHTML = "Ocurrió un error al verificar el código.";
+        console.error(error);
+    }
+}
     </script>
 </body>
 
