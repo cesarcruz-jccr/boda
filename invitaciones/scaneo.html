@@ -7,16 +7,16 @@
     <!-- Cargar Firebase -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <!-- Librería jsQR para escanear QR -->
+    <script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.js"></script>
 </head>
 <body>
     <h1>Verificación de Invitaciones QR</h1>
 
-    <!-- Formulario para ingresar el código QR -->
-    <input type="text" id="codigoQR" placeholder="Ingresa el código QR">
-    <button id="verificar">Verificar</button>
-
-    <!-- Botón para escanear con la cámara -->
-    <button id="escanear">Escanear QR</button>
+    <!-- Contenedor para la cámara -->
+    <div id="camara-container" style="width: 300px; height: 200px; border: 1px solid black;">
+        <video id="camara" autoplay playsinline style="width: 100%; height: 100%; object-fit: cover;"></video>
+    </div>
 
     <!-- Mensaje de resultado -->
     <div id="mensaje"></div>
@@ -38,16 +38,54 @@
         // Obtener la instancia de Firestore
         const db = firebase.firestore();
 
-        // Manejar el botón de verificación manual
-        document.getElementById('verificar').addEventListener('click', async () => {
-            const codigoQR = document.getElementById('codigoQR').value;
-            const mensajeDiv = document.getElementById('mensaje');
+        // Elementos del DOM
+        const camara = document.getElementById('camara');
+        const mensajeDiv = document.getElementById('mensaje');
 
-            if (!codigoQR) {
-                mensajeDiv.textContent = "Por favor, ingresa un código QR.";
-                return;
-            }
+        // Acceder a la cámara
+        navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
+            .then(stream => {
+                camara.srcObject = stream;
+                camara.play();
+                startScanning();
+            })
+            .catch(err => {
+                mensajeDiv.textContent = "No se pudo acceder a la cámara.";
+                console.error(err);
+            });
 
+        // Función para iniciar el escaneo
+        function startScanning() {
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+
+            const tick = () => {
+                if (camara.readyState === camara.HAVE_ENOUGH_DATA) {
+                    canvas.width = camara.videoWidth;
+                    canvas.height = camara.videoHeight;
+                    context.drawImage(camara, 0, 0, canvas.width, canvas.height);
+
+                    const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+                    const code = jsQR(imageData.data, imageData.width, imageData.height);
+
+                    if (code) {
+                        // Detener la cámara
+                        camara.srcObject.getTracks().forEach(track => track.stop());
+                        camara.style.display = 'none';
+
+                        // Verificar el código QR
+                        verificarCodigoQR(code.data);
+                        return;
+                    }
+                }
+                requestAnimationFrame(tick);
+            };
+
+            tick();
+        }
+
+        // Función para verificar el código QR
+        async function verificarCodigoQR(codigoQR) {
             try {
                 // Buscar el código en Firebase
                 const invitadoRef = db.collection('invitados').doc(codigoQR);
@@ -70,58 +108,7 @@
                 mensajeDiv.textContent = "Ocurrió un error al verificar el código.";
                 console.error(error);
             }
-        });
-
-        // Escanear QR con la cámara
-        document.getElementById('escanear').addEventListener('click', () => {
-            const mensajeDiv = document.getElementById('mensaje');
-            mensajeDiv.textContent = "Escaneando...";
-
-            // Acceder a la cámara
-            navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
-                .then(stream => {
-                    const video = document.createElement('video');
-                    video.srcObject = stream;
-                    video.setAttribute("style", "display:none;");
-                    document.body.appendChild(video);
-                    video.play();
-
-                    // Procesar el video para detectar el QR
-                    const tick = () => {
-                        if (video.readyState === video.HAVE_ENOUGH_DATA) {
-                            const canvas = document.createElement('canvas');
-                            canvas.width = video.videoWidth;
-                            canvas.height = video.videoHeight;
-                            const context = canvas.getContext('2d');
-                            context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-                            const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-                            const code = jsQR(imageData.data, imageData.width, imageData.height);
-
-                            if (code) {
-                                // Detener la cámara
-                                stream.getTracks().forEach(track => track.stop());
-                                document.body.removeChild(video);
-
-                                // Verificar el código QR
-                                document.getElementById('codigoQR').value = code.data;
-                                document.getElementById('verificar').click();
-                                return;
-                            }
-                        }
-                        requestAnimationFrame(tick);
-                    };
-
-                    tick();
-                })
-                .catch(err => {
-                    mensajeDiv.textContent = "No se pudo acceder a la cámara.";
-                    console.error(err);
-                });
-        });
+        }
     </script>
-
-    <!-- Librería jsQR para escanear QR -->
-    <script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.js"></script>
 </body>
 </html>
