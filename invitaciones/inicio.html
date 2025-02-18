@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Invitaciones QR</title>
+    <!-- Cargar Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <!-- Cargar QRCode.js -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+</head>
+<body>
+    <h1>Generador de Invitaciones QR</h1>
+    <form id="formulario">
+        <input type="text" id="nombre" placeholder="Nombre" required>
+        <input type="email" id="correo" placeholder="Correo" required>
+        <button type="submit">Generar Invitación</button>
+    </form>
+    <div id="resultado"></div>
+
+    <script>
+        // Configuración de Firebase
+        const firebaseConfig = {
+    apiKey: "AIzaSyBjDElF__Bcgo137GGf6hPRXhEp4BatD10",
+    authDomain: "recaudaciones-26766.firebaseapp.com",
+    projectId: "recaudaciones-26766",
+    storageBucket: "recaudaciones-26766.appspot.com",
+    messagingSenderId: "793331710217",
+    appId: "1:793331710217:web:93d036faa48032a6f53bd8"
+};
+
+        // Inicializar Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // Obtener la instancia de Firestore
+        const db = firebase.firestore();
+
+        // Manejar el formulario
+        document.getElementById('formulario').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            // Obtener datos del formulario
+            const nombre = document.getElementById('nombre').value;
+            const correo = document.getElementById('correo').value;
+
+            // Generar un código único
+            const codigoUnico = correo; // O usa Math.random().toString(36).substring(7);
+
+            // Guardar en Firebase
+            await db.collection('invitados').doc(codigoUnico).set({
+                nombre: nombre,
+                correo: correo,
+                asistio: false
+            });
+
+            // Mostrar el código QR como una imagen
+            const resultadoDiv = document.getElementById('resultado');
+
+            QRCode.toDataURL(codigoUnico, { width: 200 }, (err, url) => {
+                if (err) throw err;
+
+                // Crear un elemento <img> y asignarle la URL del QR
+                const img = document.createElement('img');
+                img.src = url;
+                img.width = 200;
+                img.height = 200;
+
+                // Agregar la imagen al contenedor
+                resultadoDiv.innerHTML = ''; // Limpiar el contenedor
+                resultadoDiv.appendChild(img);
+            });
+
+            alert("Tu invitación ha sido generada. Descarga el código QR.");
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificación de Invitaciones QR</title>
+    <!-- Cargar Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+</head>
+<body>
+    <h1>Verificación de Invitaciones QR</h1>
+
+    <!-- Formulario para ingresar el código QR -->
+    <input type="text" id="codigoQR" placeholder="Ingresa el código QR">
+    <button id="verificar">Verificar</button>
+
+    <!-- Botón para escanear con la cámara -->
+    <button id="escanear">Escanear QR</button>
+
+    <!-- Mensaje de resultado -->
+    <div id="mensaje"></div>
+
+    <script>
+        // Configuración de Firebase
+        const firebaseConfig = {
+    apiKey: "AIzaSyBjDElF__Bcgo137GGf6hPRXhEp4BatD10",
+    authDomain: "recaudaciones-26766.firebaseapp.com",
+    projectId: "recaudaciones-26766",
+    storageBucket: "recaudaciones-26766.appspot.com",
+    messagingSenderId: "793331710217",
+    appId: "1:793331710217:web:93d036faa48032a6f53bd8"
+};
+
+        // Inicializar Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // Obtener la instancia de Firestore
+        const db = firebase.firestore();
+
+        // Manejar el botón de verificación manual
+        document.getElementById('verificar').addEventListener('click', async () => {
+            const codigoQR = document.getElementById('codigoQR').value;
+            const mensajeDiv = document.getElementById('mensaje');
+
+            if (!codigoQR) {
+                mensajeDiv.textContent = "Por favor, ingresa un código QR.";
+                return;
+            }
+
+            try {
+                // Buscar el código en Firebase
+                const invitadoRef = db.collection('invitados').doc(codigoQR);
+                const invitadoDoc = await invitadoRef.get();
+
+                if (invitadoDoc.exists) {
+                    const invitado = invitadoDoc.data();
+
+                    if (!invitado.asistio) {
+                        // Marcar como presente
+                        await invitadoRef.update({ asistio: true });
+                        mensajeDiv.textContent = `Acceso permitido. ¡Bienvenido, ${invitado.nombre}!`;
+                    } else {
+                        mensajeDiv.textContent = "Este invitado ya ha ingresado.";
+                    }
+                } else {
+                    mensajeDiv.textContent = "Código QR inválido.";
+                }
+            } catch (error) {
+                mensajeDiv.textContent = "Ocurrió un error al verificar el código.";
+                console.error(error);
+            }
+        });
+
+        // Escanear QR con la cámara
+        document.getElementById('escanear').addEventListener('click', () => {
+            const mensajeDiv = document.getElementById('mensaje');
+            mensajeDiv.textContent = "Escaneando...";
+
+            // Acceder a la cámara
+            navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
+                .then(stream => {
+                    const video = document.createElement('video');
+                    video.srcObject = stream;
+                    video.setAttribute("style", "display:none;");
+                    document.body.appendChild(video);
+                    video.play();
+
+                    // Procesar el video para detectar el QR
+                    const tick = () => {
+                        if (video.readyState === video.HAVE_ENOUGH_DATA) {
+                            const canvas = document.createElement('canvas');
+                            canvas.width = video.videoWidth;
+                            canvas.height = video.videoHeight;
+                            const context = canvas.getContext('2d');
+                            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+                            const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+                            const code = jsQR(imageData.data, imageData.width, imageData.height);
+
+                            if (code) {
+                                // Detener la cámara
+                                stream.getTracks().forEach(track => track.stop());
+                                document.body.removeChild(video);
+
+                                // Verificar el código QR
+                                document.getElementById('codigoQR').value = code.data;
+                                document.getElementById('verificar').click();
+                                return;
+                            }
+                        }
+                        requestAnimationFrame(tick);
+                    };
+
+                    tick();
+                })
+                .catch(err => {
+                    mensajeDiv.textContent = "No se pudo acceder a la cámara.";
+                    console.error(err);
+                });
+        });
+    </script>
+
+    <!-- Librería jsQR para escanear QR -->
+    <script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.js"></script>
+</body>
+</html>
