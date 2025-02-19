@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Invitados</title>
+    <!-- Cargar Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+    font-family: "Montserrat", serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    margin: 0;
+    padding: 0;
+    background-color: #ffe3fb;
+}
+
+.counter {
+    color: #521750;
+    margin-top: 30px;
+    font-weight: 900;
+    font-size: 4.5rem;
+    line-height: 4.3rem;
+}
+        h1 {
+            text-align: center;
+            color: #333;
+            
+        }
+        .invitado, .cabecera {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px;
+            margin-bottom: 10px;
+            background-color: #ffe4f0;            border-radius: 5px;
+        }
+        .cabecera {
+            background-color: #d16ba5; /* Color destacado para la cabecera */
+            color: white;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .invitado:nth-child(even) {
+            background-color: #f4f4f4;
+        }
+        .invitado:hover {
+            background-color: #f1f1f1;
+        }
+        .nombre, .mesa, .asistio {
+            flex: 1;
+            text-align: center;
+        }
+        .asistio {
+            color: #e74c3c;
+        }
+        .asistio.si {
+            color: #2ecc71;
+        }
+        .no-invitados {
+            text-align: center;
+            color: #777;
+        }
+         /* Estilo principal para el contenedor de la invitación */
+         #contenido-w {
+    /* width: 100%; */
+    /* max-width: 900px; */
+    display: flex;
+    padding: 20px;
+    align-items: center;
+    margin: 0 auto;
+    justify-content: center;
+    flex-direction: column;
+    color: #000;
+}
+    </style>
+</head>
+<body>
+    <div id="contenido-w">
+        <!-- Nuestra Historia -->
+        <section>
+    <h1 class="counter">LISTA DE INVITADOS</h1>
+    <!-- Contenedor para la lista de invitados -->
+    <div id="lista-invitados">
+        <!-- Cabecera -->
+        <div class="cabecera">
+            <div class="nombre">Nombre</div>
+            <div class="mesa">Mesa</div>
+            <div class="asistio">Asistió</div>
+        </div>
+        <!-- Los datos se cargarán aquí dinámicamente -->
+    </div>
+    </div>
+</section>
+    <script>
+        // Configuración de Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyBjDElF__Bcgo137GGf6hPRXhEp4BatD10",
+            authDomain: "recaudaciones-26766.firebaseapp.com",
+            projectId: "recaudaciones-26766",
+            storageBucket: "recaudaciones-26766.appspot.com",
+            messagingSenderId: "793331710217",
+            appId: "1:793331710217:web:93d036faa48032a6f53bd8"
+        };
+
+        // Inicializar Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // Obtener la instancia de Firestore
+        const db = firebase.firestore();
+
+        // Función para cargar la lista de invitados
+        async function cargarInvitados() {
+            const contenedor = document.getElementById('lista-invitados');
+            contenedor.innerHTML = ''; // Limpiar el contenedor antes de cargar nuevos datos
+
+            // Crear la cabecera
+            const cabecera = document.createElement('div');
+            cabecera.classList.add('cabecera');
+
+            const nombreCabecera = document.createElement('div');
+            nombreCabecera.classList.add('nombre');
+            nombreCabecera.textContent = 'Nombre';
+
+            const mesaCabecera = document.createElement('div');
+            mesaCabecera.classList.add('mesa');
+            mesaCabecera.textContent = 'Mesa';
+
+            const asistioCabecera = document.createElement('div');
+            asistioCabecera.classList.add('asistio');
+            asistioCabecera.textContent = 'Asistió';
+
+            cabecera.appendChild(nombreCabecera);
+            cabecera.appendChild(mesaCabecera);
+            cabecera.appendChild(asistioCabecera);
+
+            contenedor.appendChild(cabecera);
+
+            try {
+                // Obtener todos los documentos de la colección 'invitados'
+                const snapshot = await db.collection('invitados').get();
+
+                if (snapshot.empty) {
+                    contenedor.innerHTML += '<div class="no-invitados">No hay invitados registrados.</div>';
+                    return;
+                }
+
+                // Iterar sobre los documentos y agregarlos al contenedor
+                snapshot.forEach(doc => {
+                    const invitado = doc.data();
+
+                    // Crear un div para cada invitado
+                    const divInvitado = document.createElement('div');
+                    divInvitado.classList.add('invitado');
+
+                    // Nombre
+                    const nombreDiv = document.createElement('div');
+                    nombreDiv.classList.add('nombre');
+                    nombreDiv.textContent = invitado.nombre;
+
+                    // Mesa
+                    const mesaDiv = document.createElement('div');
+                    mesaDiv.classList.add('mesa');
+                    mesaDiv.textContent = invitado.mesa || 'Sin asignar';
+
+                    // Asistió
+                    const asistioDiv = document.createElement('div');
+                    asistioDiv.classList.add('asistio');
+                    asistioDiv.textContent = invitado.asistio ? 'Sí' : 'No';
+                    if (invitado.asistio) {
+                        asistioDiv.classList.add('si'); // Clase para resaltar "Sí"
+                    }
+
+                    // Agregar los elementos al div del invitado
+                    divInvitado.appendChild(nombreDiv);
+                    divInvitado.appendChild(mesaDiv);
+                    divInvitado.appendChild(asistioDiv);
+
+                    // Agregar el invitado al contenedor
+                    contenedor.appendChild(divInvitado);
+                });
+            } catch (error) {
+                console.error("Error al cargar la lista de invitados:", error);
+                contenedor.innerHTML += '<div class="no-invitados">Ocurrió un error al cargar los datos.</div>';
+            }
+        }
+
+        // Cargar la lista de invitados cuando se cargue la página
+        window.onload = cargarInvitados;
+    </script>
+</body>
+</html>
