@@ -14,6 +14,7 @@
         href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
         rel="stylesheet">
     <style>
+        /* Estilo general */
         body {
             font-family: "Montserrat", serif;
             font-optical-sizing: auto;
@@ -21,71 +22,63 @@
             margin: 0;
             padding: 0;
             background-color: #ffe3fb;
+            animation: fadeInBackground 1.5s ease-in-out;
         }
 
+        /* Animación de fondo */
+        @keyframes fadeInBackground {
+            from {
+                background-color: #fff;
+            }
+
+            to {
+                background-color: #ffe3fb;
+            }
+        }
+
+        /* Título principal */
         .counter {
             color: #521750;
             margin-top: 30px;
             font-weight: 900;
-            font-size: 4.5rem;
-            line-height: 4.3rem;
+            font-size: 2.5rem;
+    line-height: 1.2;
+            text-align: center;
+            animation: slideInFromTop 1.5s ease-out;
+        }
+
+        /* Animación de deslizamiento desde arriba */
+        @keyframes slideInFromTop {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
 
         h1 {
             text-align: center;
             color: #333;
-
+            animation: fadeInText 1.5s ease-in-out;
         }
 
-        .invitado,
-        .cabecera {
-            display: flex;
-            justify-content: space-between;
-            padding: 15px;
-            margin-bottom: 10px;
-            background-color: #ffd6e5;
-            border-radius: 5px;
+        /* Animación de texto apareciendo */
+        @keyframes fadeInText {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
         }
 
-        .cabecera {
-            background-color: #d16ba5;
-            /* Color destacado para la cabecera */
-            color: white;
-            font-weight: bold;
-            margin-top: 20px;
-            transition: 1s;
-        }
-
-        .invitado:hover {
-            background-color: #f8b5ce;
-        }
-
-        .nombre,
-        .mesa,
-        .asistio {
-            flex: 1;
-            text-align: center;
-        }
-
-        .asistio {
-            color: #521750;
-            font-weight: 800;
-        }
-
-        .asistio.si {
-            color: #00ff6a;
-            font-weight: 800;
-        }
-
-        .no-invitados {
-            text-align: center;
-            color: #777;
-        }
-
-        /* Estilo principal para el contenedor de la invitación */
+        /* Contenedor de invitados */
         #contenido-w {
-            /* width: 100%; */
-            /* max-width: 900px; */
             display: flex;
             padding: 20px;
             align-items: center;
@@ -93,6 +86,141 @@
             justify-content: center;
             flex-direction: column;
             color: #000;
+            max-width: 400px;
+            width: 100%;
+            animation: fadeInContent 1.5sease-in-out;
+        }
+
+        /* Animación de contenido apareciendo */
+        @keyframes fadeInContent {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Contador */
+        div#contador {
+            display: flex;
+            justify-content: space-between;
+            padding: 0 10px;
+            margin: 20px 0;
+            font-weight: 800;
+            color: #521750;
+            animation: pulseCounter 2s infinite alternate;
+        }
+
+        /* Animación de pulso para el contador */
+        @keyframes pulseCounter {
+            from {
+                transform: scale(1);
+            }
+
+            to {
+                transform: scale(1.05);
+            }
+        }
+
+        /* Cabecera */
+        .cabecera {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px;
+            margin-bottom: 10px;
+            background-color: #d16ba5;
+            color: white;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: all 0.3s ease-in-out;
+            cursor: pointer;
+            animation: fadeInHeader 1.5s ease-in-out;
+        }
+
+        /* Animación de cabecera apareciendo */
+        @keyframes fadeInHeader {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Efecto hover en la cabecera */
+        .cabecera:hover {
+            background-color: #b84c8d;
+            transform: scale(1.02);
+        }
+
+        /* Invitados */
+        .invitado {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px;
+            margin-bottom: 10px;
+            background-color: #ffd6e5;
+            border-radius: 5px;
+            transition: all 0.3s ease-in-out;
+            animation: fadeInRow 0.5s ease-in-out;
+        }
+
+        /* Animación de filas apareciendo */
+        @keyframes fadeInRow {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Efecto hover en los invitados */
+        .invitado:hover {
+            background-color: #f8b5ce;
+            transform: scale(1.02);
+        }
+
+        /* Columnas */
+        .nombre,
+        .mesa,
+        .asistio {
+            flex: 1;
+            text-align: center;
+            transition: all 0.3s ease-in-out;
+        }
+
+        /* Estado de asistencia */
+        .asistio {
+            color: #521750;
+            font-weight: 800;
+        }
+
+        .asistio.si {
+            color: #d16ba5;
+            font-weight: 800;
+        }
+
+        /* Mensaje de "No hay invitados" */
+        .no-invitados {
+            text-align: center;
+            color: #777;
+            animation: fadeInText 1.5s ease-in-out;
+        }
+
+        /* Efecto de pulsación al hacer clic en las cabeceras */
+        .cabecera:active {
+            transform: scale(0.98);
         }
     </style>
 </head>
@@ -102,18 +230,34 @@
         <!-- Nuestra Historia -->
         <section>
             <h1 class="counter">LISTA DE INVITADOS</h1>
+            <!-- Contador -->
+            <div id="contador">
+                <p>Invitados: <span id="total-invitados">0</span></p>
+                <p>Asistieron: <span id="asistieron">0</span></p>
+                <p>No asistieron: <span id="no-asistieron">0</span></p>
+            </div>
             <!-- Contenedor para la lista de invitados -->
             <div id="lista-invitados">
                 <!-- Cabecera -->
                 <div class="cabecera">
-                    <div class="nombre">Nombre</div>
-                    <div class="mesa">Mesa</div>
-                    <div class="asistio">Asistió</div>
+                    <div class="nombre" onclick="ordenarPor('nombre')">Nombre</div>
+                    <div class="mesa" onclick="ordenarPor('mesa')">Mesa</div>
+                    <div class="asistio" onclick="ordenarPor('asistio')">Asistió</div>
+                </div>
+                <!-- Filtros -->
+                <div id="filtros">
+                    <label for="filtro-asistencia">Filtrar por asistencia:</label>
+                    <select id="filtro-asistencia" onchange="aplicarFiltro()">
+                        <option value="todos">Todos</option>
+                        <option value="si">Asistieron</option>
+                        <option value="no">No asistieron</option>
+                    </select>
                 </div>
                 <!-- Los datos se cargarán aquí dinámicamente -->
             </div>
+        </section>
     </div>
-    </section>
+
     <script>
         // Configuración de Firebase
         const firebaseConfig = {
@@ -131,32 +275,19 @@
         // Obtener la instancia de Firestore
         const db = firebase.firestore();
 
+        // Variables globales para almacenar los datos de los invitados
+        let invitados = [];
+        let ordenActual = { campo: null, direccion: 'asc' }; // Estado del orden actual
+
         // Función para cargar la lista de invitados
         async function cargarInvitados() {
             const contenedor = document.getElementById('lista-invitados');
             contenedor.innerHTML = ''; // Limpiar el contenedor antes de cargar nuevos datos
 
-            // Crear la cabecera
-            const cabecera = document.createElement('div');
-            cabecera.classList.add('cabecera');
-
-            const nombreCabecera = document.createElement('div');
-            nombreCabecera.classList.add('nombre');
-            nombreCabecera.textContent = 'Nombre';
-
-            const mesaCabecera = document.createElement('div');
-            mesaCabecera.classList.add('mesa');
-            mesaCabecera.textContent = 'Mesa';
-
-            const asistioCabecera = document.createElement('div');
-            asistioCabecera.classList.add('asistio');
-            asistioCabecera.textContent = 'Asistió';
-
-            cabecera.appendChild(nombreCabecera);
-            cabecera.appendChild(mesaCabecera);
-            cabecera.appendChild(asistioCabecera);
-
-            contenedor.appendChild(cabecera);
+            // Contadores
+            let totalInvitados = 0;
+            let asistieron = 0;
+            let noAsistieron = 0;
 
             try {
                 // Obtener todos los documentos de la colección 'invitados'
@@ -167,49 +298,143 @@
                     return;
                 }
 
-                // Iterar sobre los documentos y agregarlos al contenedor
+                // Limpiar el array de invitados
+                invitados = [];
+
+                // Iterar sobre los documentos y agregarlos al array
                 snapshot.forEach(doc => {
                     const invitado = doc.data();
+                    invitado.id = doc.id; // Guardar el ID del documento
+                    invitados.push(invitado);
 
-                    // Crear un div para cada invitado
-                    const divInvitado = document.createElement('div');
-                    divInvitado.classList.add('invitado');
-
-                    // Nombre
-                    const nombreDiv = document.createElement('div');
-                    nombreDiv.classList.add('nombre');
-                    nombreDiv.textContent = invitado.nombre;
-
-                    // Mesa
-                    const mesaDiv = document.createElement('div');
-                    mesaDiv.classList.add('mesa');
-                    mesaDiv.textContent = invitado.mesa || 'Sin asignar';
-
-                    // Asistió
-                    const asistioDiv = document.createElement('div');
-                    asistioDiv.classList.add('asistio');
-                    asistioDiv.textContent = invitado.asistio ? 'Sí' : 'No';
+                    totalInvitados++;
                     if (invitado.asistio) {
-                        asistioDiv.classList.add('si'); // Clase para resaltar "Sí"
+                        asistieron++;
+                    } else {
+                        noAsistieron++;
                     }
-
-                    // Agregar los elementos al div del invitado
-                    divInvitado.appendChild(nombreDiv);
-                    divInvitado.appendChild(mesaDiv);
-                    divInvitado.appendChild(asistioDiv);
-
-                    // Agregar el invitado al contenedor
-                    contenedor.appendChild(divInvitado);
                 });
+
+                // Actualizar el contador en el HTML
+                document.getElementById('total-invitados').textContent = totalInvitados;
+                document.getElementById('asistieron').textContent = asistieron;
+                document.getElementById('no-asistieron').textContent = noAsistieron;
+
+                // Renderizar la lista inicial
+                renderizarLista(invitados);
             } catch (error) {
                 console.error("Error al cargar la lista de invitados:", error);
                 contenedor.innerHTML += '<div class="no-invitados">Ocurrió un error al cargar los datos.</div>';
             }
         }
 
+        // Función para renderizar la lista de invitados
+        function renderizarLista(lista) {
+            const contenedor = document.getElementById('lista-invitados');
+            contenedor.innerHTML = ''; // Limpiar el contenedor antes de renderizar
+
+            // Crear la cabecera
+            const cabecera = document.createElement('div');
+            cabecera.classList.add('cabecera');
+
+            const nombreCabecera = document.createElement('div');
+            nombreCabecera.classList.add('nombre');
+            nombreCabecera.textContent = 'Nombre';
+            nombreCabecera.onclick = () => ordenarPor('nombre');
+
+            const mesaCabecera = document.createElement('div');
+            mesaCabecera.classList.add('mesa');
+            mesaCabecera.textContent = 'Mesa';
+            mesaCabecera.onclick = () => ordenarPor('mesa');
+
+            const asistioCabecera = document.createElement('div');
+            asistioCabecera.classList.add('asistio');
+            asistioCabecera.textContent = 'Asistió';
+            asistioCabecera.onclick = () => ordenarPor('asistio');
+
+            cabecera.appendChild(nombreCabecera);
+            cabecera.appendChild(mesaCabecera);
+            cabecera.appendChild(asistioCabecera);
+
+            contenedor.appendChild(cabecera);
+
+            // Renderizar cada invitado
+            lista.forEach(invitado => {
+                const divInvitado = document.createElement('div');
+                divInvitado.classList.add('invitado');
+
+                const nombreDiv = document.createElement('div');
+                nombreDiv.classList.add('nombre');
+                nombreDiv.textContent = invitado.nombre;
+
+                const mesaDiv = document.createElement('div');
+                mesaDiv.classList.add('mesa');
+                mesaDiv.textContent = invitado.mesa || 'Sin asignar';
+
+                const asistioDiv = document.createElement('div');
+                asistioDiv.classList.add('asistio');
+                asistioDiv.textContent = invitado.asistio ? 'Sí' : 'No';
+                if (invitado.asistio) {
+                    asistioDiv.classList.add('si'); // Clase para resaltar "Sí"
+                }
+
+                divInvitado.appendChild(nombreDiv);
+                divInvitado.appendChild(mesaDiv);
+                divInvitado.appendChild(asistioDiv);
+
+                contenedor.appendChild(divInvitado);
+            });
+        }
+
+        // Función para aplicar filtros
+        function aplicarFiltro() {
+            const filtro = document.getElementById('filtro-asistencia').value;
+
+            let listaFiltrada = [];
+            if (filtro === 'todos') {
+                listaFiltrada = invitados;
+            } else if (filtro === 'si') {
+                listaFiltrada = invitados.filter(inv => inv.asistio);
+            } else if (filtro === 'no') {
+                listaFiltrada = invitados.filter(inv => !inv.asistio);
+            }
+
+            renderizarLista(listaFiltrada);
+        }
+
+        // Función para ordenar la lista
+        function ordenarPor(campo) {
+            let listaOrdenada = [...invitados];
+
+            // Determinar la dirección del orden (ascendente o descendente)
+            let direccion = ordenActual.campo === campo && ordenActual.direccion === 'asc' ? 'desc' : 'asc';
+
+            // Actualizar el estado del orden
+            ordenActual = { campo, direccion };
+
+            if (campo === 'nombre') {
+                listaOrdenada.sort((a, b) => {
+                    return direccion === 'asc' ? a.nombre.localeCompare(b.nombre) : b.nombre.localeCompare(a.nombre);
+                });
+            } else if (campo === 'mesa') {
+                listaOrdenada.sort((a, b) => {
+                    const mesaA = a.mesa || '';
+                    const mesaB = b.mesa || '';
+                    return direccion === 'asc' ? mesaA.localeCompare(mesaB) : mesaB.localeCompare(mesaA);
+                });
+            } else if (campo === 'asistio') {
+                listaOrdenada.sort((a, b) => {
+                    return direccion === 'asc' ? a.asistio - b.asistio : b.asistio - a.asistio;
+                });
+            }
+
+            renderizarLista(listaOrdenada);
+        }
+
         // Cargar la lista de invitados cuando se cargue la página
         window.onload = cargarInvitados;
     </script>
+
 </body>
 
 </html>
